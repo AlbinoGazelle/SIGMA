@@ -1,0 +1,26 @@
+title: Guest Account Activation
+status: experimental
+description: Detects the Guest account being activated on Windows Operating System
+date: 2022/5/18
+author: Nathan Burns
+tags:
+    - attack.persistence
+    - attack.t1136.001
+references:
+    - https://nburns.tech/blog/fun_with_hunting_user
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_one:
+        EventID: 1
+        Image: C:\Windows\System32\net.exe
+        process: 'net  user guest /active:yes'
+    selection_two:
+        EventID: 1
+        Image: C:\Windows\System32\net1.exe
+        process: 'net  user guest /active:yes'
+    condition: selection_one or selection_two
+falsepositives:
+    - Legitimate Guest Account Usage
+level: medium
