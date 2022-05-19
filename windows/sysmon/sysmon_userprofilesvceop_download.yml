@@ -7,6 +7,7 @@ tags:
     - attack.privilege_escalation
     - attack.t1068
 references:
+    - https://github.com/klinix5/ProfSvcLPE
     - https://nburns.tech/blog/fun_with_hunting_user
 logsource:
     product: windows

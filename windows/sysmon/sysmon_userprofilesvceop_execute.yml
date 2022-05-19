@@ -1,0 +1,23 @@
+title: UserProfileSvcEop.exe Execution
+status: experimental
+description: Detects the execution of common Windows privilege escalation tool UserProfileSvcEop.exe
+date: 2022/5/19
+author: Nathan Burns
+tags:
+    - attack.privilege_escalation
+    - attack.t1068
+references:
+    - https://github.com/klinix5/ProfSvcLPE
+    - https://nburns.tech/blog/fun_with_hunting_user
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_one:
+        EventID: 1
+        EventDescription: Process creation
+        process_exec: "UserProfileSvcEoP.exe"
+    condition: selection_one
+falsepositives:
+    - None
+level: high

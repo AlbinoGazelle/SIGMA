@@ -1,0 +1,34 @@
+title: Guest Account RDP and Admin Permissions
+status: experimental
+description: Detects the Guest account being given RDP or Administrator permissions on Windows.
+date: 2022/5/19
+author: Nathan Burns
+tags:
+    - attack.persistence
+    - attack.t1136.001
+references:
+    - https://nburns.tech/blog/fun_with_hunting_user
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_one:
+        EventID: 1
+        Image: C:\Windows\System32\net1.exe
+        process: 'net  localgroup Administrators guest /add'
+    selection_two:
+        EventID: 1
+        Image: C:\Windows\System32\net1.exe
+        process: 'net  localgroup "Remote Desktop Users" guest /add'
+    selection_three:
+        EventID: 1
+        Image: C:\Windows\System32\net.exe
+        process: 'net  localgroup "Remote Desktop Users" guest /add'
+    selection_four:
+        EventID: 1
+        Image: C:\Windows\System32\net.exe
+        process: 'net  localgroup "Remote Desktop Users" guest /add'
+    condition: selection_one or selection_two or selection_three or selection_four
+falsepositives:
+    - Legitimate Administrator or RDP Guest Account Usage
+level: medium
