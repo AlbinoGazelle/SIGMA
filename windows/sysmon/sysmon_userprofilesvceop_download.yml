@@ -1,0 +1,22 @@
+title: UserProfileSvcEop.exe Download
+status: experimental
+description: Detects the download of common Windows privilege escalation tool UserProfileSvcEop.exe
+date: 2022/5/18
+author: Nathan Burns
+tags:
+    - attack.privilege_escalation
+    - attack.t1068
+references:
+    - https://nburns.tech/blog/fun_with_hunting_user
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_one:
+        EventID: 11
+        EventDescription: FileCreate
+        file_name: UserProfileSvcEop.exe
+    condition: selection_one
+falsepositives:
+    - None
+level: high
